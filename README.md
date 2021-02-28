@@ -2,7 +2,7 @@
 awtrix 应用  显示 今明两天的最高最低温度和天气情况。
 ## 效果图:
 ![1614531337075.gif](https://i.loli.net/2021/03/01/viaRqFo8UsOTdNr.gif)
-##使用方法
+## 使用方法
 1. 下载项目中的`Template.jar`文件，存入到服务器中Apps目录中。
 2. 在服务器页面执行命令`reload apps`。即可在My Apps中找到该应用。
 3. 配置CityID和Key即可。
