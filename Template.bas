@@ -7,15 +7,9 @@ Version=4.2
 
 Sub Class_Globals
 	Dim App As AWTRIX
-	Dim iconID As Int = 487
-	'Declare your variables here
-	Dim firstDayHigh As String = "0"
-	Dim firstDayLow As String = "0"
-	Dim firstDayIcon As Int = 487
 	
-	Dim secondDayHigh As String = "0"
-	Dim secondDayLow As String = "0"
-	Dim secondDayIcon As Int = 487
+	'Declare your variables here
+	Dim first_name As String
 	
 End Sub
 
@@ -50,10 +44,10 @@ Public Sub Initialize() As String
 	App.author = "Blueforcer"
 
 	'Icon (ID) to be displayed in the Appstore and MyApps
-	App.coverIcon = 349
+	App.coverIcon = 6
 	
 	'needed Settings for this App wich can be configurate from user via webinterface. Dont use spaces here!
-	App.Settings=CreateMap("APIKey":"","CityID":"beijing")
+	App.settings = CreateMap("CustomText":"Hello World")
 		
 	'Setup Instructions. You can use HTML to format it
 	App.setupDescription = $"
@@ -67,7 +61,7 @@ Public Sub Initialize() As String
 	App.downloads = 1
 	
 	'IconIDs from AWTRIXER. You can add multiple if you need more
-	App.Icons=Array(349,486,346,344,313,467)
+	App.icons = Array(349,7)
 	
 	'Tickinterval in ms (should be 65 by default, for smooth scrolling))
 	App.tick = 65
@@ -135,7 +129,7 @@ End Sub
 Sub App_startDownload(jobNr As Int)
 	Select jobNr
 		Case 1
-			App.Download("https://api.seniverse.com/v3/weather/daily.json?key="&App.get("APIKey")&"&location="&App.get("CityID")&"&language=zh-Hans&unit=c&start=0&days=2")
+			App.Download("https://reqres.in/api/users/2")
 	End Select
 End Sub
 
@@ -151,20 +145,8 @@ Sub App_evalJobResponse(Resp As JobResponse)
 					Dim parser As JSONParser
 					parser.Initialize(Resp.ResponseString)
 					Dim root As Map = parser.NextObject
-					Dim results As List = root.Get("results")
-					Dim TMap As Map = results.Get("0")
-					Dim dailys As List = TMap.Get("daily")
-					Dim today As Map = dailys.Get("0")
-					Dim tommorow As Map = dailys.Get("1")
-					Dim firstDayLowValue As String =  today.Get("low")
-					firstDayLow = firstDayLowValue&"";
-					firstDayHigh = today.Get("high")
-					firstDayIcon = getIconID(today.Get("code_day"))
-				
-					secondDayLow = tommorow.Get("low")
-					secondDayHigh = tommorow.Get("high")
-					secondDayIcon = getIconID( tommorow.Get("code_day"))
-					
+					Dim data As Map = root.Get("data")
+					first_name = data.Get("first_name")
 			End Select
 		End If
 	Catch
@@ -174,28 +156,6 @@ End Sub
 
 'With this sub you build your frame wtih eveery Tick.
 Sub App_genFrame
-	If App.startedAt<DateTime.Now-App.duration*1000/2 Then
-		App.genSimpleFrame("TMR:"&secondDayLow&"°~"&secondDayHigh&"°",secondDayIcon,False,False,Null,True)
-	Else
-		App.genSimpleFrame("Today:"&firstDayLow&"°~"&firstDayHigh&"°",firstDayIcon,False,False,Null,True)
-	End If
-	
+	App.genSimpleFrame("good",7,False,False,Null,True)
 
-End Sub
-
-
-Sub getIconID (weatherCode As Int)As Short
-	If weatherCode>=0 And weatherCode<=3 Then 
-		Return 349
-	Else If weatherCode>=4 And weatherCode<9 Then
-		Return 486
-	Else If weatherCode>=10 And weatherCode<20 Then
-		Return 346
-	Else If weatherCode>=21 And weatherCode<25 Then
-		Return 344
-	Else If weatherCode>=27 And weatherCode<33 Then
-		Return 313
-	Else
-		Return 467
-	End If
 End Sub
