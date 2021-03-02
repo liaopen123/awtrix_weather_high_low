@@ -53,7 +53,7 @@ Public Sub Initialize() As String
 	App.coverIcon = 349
 	
 	'needed Settings for this App wich can be configurate from user via webinterface. Dont use spaces here!
-	App.Settings=CreateMap("APIKey":"","CityID":"beijing")
+	App.Settings=CreateMap("APIKey":"","CityID":"beijing","Separator":"~")
 		
 	'Setup Instructions. You can use HTML to format it
 	App.setupDescription = $"
@@ -94,7 +94,7 @@ End Sub
 'this sub is called if AWTRIX switch to thee next app and pause this one
 Sub App_Exited
 	
-End Sub
+End Sub	
 
 'This sub is called right before AWTRIX will display your App.
 'If you need to another Icon you can set your Iconlist here again.
@@ -177,22 +177,20 @@ End Sub
 'With this sub you build your frame wtih eveery Tick.
 Sub App_genFrame
 	If App.startedAt<DateTime.Now-App.duration*1000/2 Then
-		App.genSimpleFrame("TMR:"&secondDayLow&"°~"&secondDayHigh&"°",secondDayIcon,False,False,Null,True)
+		App.genSimpleFrame("TMR:"&secondDayLow&"°"&App.get("Separator")&secondDayHigh&"°",secondDayIcon,False,False,Null,True)
 	Else
 		
 		If currentTime>18 Then
-			App.genSimpleFrame("Today:"&firstDayLow&"°~"&firstDayHigh&"°",348,False,False,Null,True)
+			App.genSimpleFrame("Today:"&firstDayLow&"°"&App.get("Separator")&firstDayHigh&"°",348,False,False,Null,True)
 		Else
-			App.genSimpleFrame("Today:"&firstDayLow&"°~"&firstDayHigh&"°",firstDayIcon,False,False,Null,True)
+			App.genSimpleFrame("Today:"&firstDayLow&"°"&App.get("Separator")&firstDayHigh&"°",firstDayIcon,False,False,Null,True)
 		End If
 	End If
-	
-	
 End Sub
 
 
 Sub getIconID (weatherCode As Int)As Short
-	If weatherCode>=0 And weatherCode<=3 Then
+	If weatherCode>=0 And weatherCode<=3 Then 
 		Return 349
 	Else If weatherCode>=4 And weatherCode<=9 Then
 		Return 486

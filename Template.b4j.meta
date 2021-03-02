@@ -7,6 +7,6 @@ ModuleBreakpoints2=
 ModuleClosedNodes0=
 ModuleClosedNodes1=
 ModuleClosedNodes2=
-NavigationStack=Main,Application_Error,16,0,Template,Initialize,57,0,AWTRIX,genSimpleFrame,473,0,Template,App_genFrame,155,6,Template,getIconID,188,0
+NavigationStack=Template,Class_Globals,12,6,Template,getIconID,200,6,Template,App_evalJobResponse,170,6,Main,AppStart,9,0,Main,Process_Globals,5,0,Template,Run,25,0,Template,App_startDownload,131,0,Template,App_genFrame,179,6,Template,Initialize,49,6,Main,Application_Error,16,0
 SelectedBuild=0
 VisibleModules=1,2
